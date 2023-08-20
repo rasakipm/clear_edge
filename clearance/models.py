@@ -1,0 +1,54 @@
+from django.db import models
+from django.contrib.auth.models import AbstractUser
+import uuid
+
+
+class Student(AbstractUser):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    phone = models.CharField(null=True, max_length=255)
+    matric_number = models.CharField(max_length=100, null=True)
+    session = models.CharField(max_length=100, null=True)
+    course = models.CharField(max_length=100, null=True)
+    faculty = models.CharField(max_length=100, null=True)
+    email = models.EmailField(unique=True, null=True)
+    status = models.BooleanField(default=False)
+    total_fee_paid = models.DecimalField(max_digits=8, decimal_places=2, null=True, default=0.00)
+    is_department = models.BooleanField(default=False)
+    date_of_birth = models.DateField(null=True)
+    nationality = models.CharField(max_length=50, null=True)
+    gender = models.CharField(max_length=10, null=True)
+    state_of_origin = models.CharField(max_length=50, null=True)
+    level = models.CharField(max_length=10, null=True)
+    year_of_admission = models.PositiveIntegerField(null=True)
+    duration = models.PositiveIntegerField(null=True)
+    hostel_room_number = models.CharField(max_length=20, null=True)
+    contact_address = models.TextField(null=True)
+    passport_photograph = models.ImageField(upload_to='passport_photos/')
+    
+    def __str__(self):
+        return self.username
+
+
+class Department(models.Model):
+    user = models.ForeignKey(Student, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    
+    def __str__(self):
+        return self.name
+
+
+class ClearanceRequest(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    is_approved = models.BooleanField(default=False)
+    decline_reason = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+        
+        
+class ClearanceSlip(models.Model):
+    student = models.OneToOneField(Student, on_delete=models.CASCADE)
+    approved_by_dean = models.BooleanField(default=False)
+    clearance_slip_pdf = models.FileField(upload_to='clearance_slips/')

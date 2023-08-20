@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+  .container {
+    margin-top: 30px;
+  }
+
+  h1 {
+    color: blueviolet;
+  }
+
+  h5 {
+    color: purple;
+  }
+
+  .alert {
+    margin-top: 20px;
+  }
+
+  .alert-success {
+    background-color: #d1e7dd;
+    border-color: #b6e3c6;
+    color: #0f5132;
+  }
+
+  .row-cols-1 {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .card {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Set width to 100% to make all boxes have the same width */
+  }
+
+  .card i {
+    font-size: 36px;
+    /* Increase the font size of the icon */
+    margin-bottom: 10px;
+    color: purple;
+  }
+
+  .card .info p {
+    margin: 0;
+  }
+
+  .card .info span {
+    font-size: 24px;
+    /* Increase the font size of the text */
+    font-weight: 600;
+    color: #666;
+  }
+
+  @media (min-width: 768px) {
+    .row-cols-md-2 {
+      column-count: 2;
+    }
+  }
+
+  @media (min-width: 992px) {
+    .row-cols-lg-4 {
+      column-count: 4;
+    }
+  }
+</style>
+
+  <div class="container">
+    <h3>Student Profile</h3>
+    <div class="row">
+      <div class="col-md-6 card">
+        <!-- Student Information -->
+        <div class="text-center">
+          <img src="{{ student.passport_photograph.url }}" alt="Passport Photograph" class="img-fluid profile-photo" style="width: 25%;">
+          <hr>
+        </div>        <!-- Display Student's Information Here -->
+        <table class="table table-bordered table-striped">
+          <tr>
+              <th>First Name</th>
+              <td>{{ student.first_name }}</td>
+            </tr>
+            <tr>
+              <th>Last Name</th>
+              <td>{{ student.last_name }}</td>
+            </tr>
+            <tr>
+              <th>Matric Number</th>
+              <td>{{ student.matric_number }}</td>
+            </tr>
+            <tr>
+              <th>Email</th>
+              <td>{{ student.email }}</td>
+            </tr>
+            <tr>
+              <th>Phone</th>
+              <td>{{ student.phone }}</td>
+            </tr>
+            <tr>
+              <th>Session</th>
+              <td>{{ student.session }}</td>
+            </tr>
+            <tr>
+              <th>Course</th>
+              <td>{{ student.course }}</td>
+            </tr>
+            <tr>
+              <th>Faculty</th>
+              <td>{{ student.faculty }}</td>
+            </tr>
+            <tr>
+              <th>Date of Birth</th>
+              <td>{{ student.date_of_birth }}</td>
+            </tr>
+            <tr>
+              <th>Nationality</th>
+              <td>{{ student.nationality }}</td>
+            </tr>
+            <tr>
+              <th>Gender</th>
+              <td>{{ student.gender }}</td>
+            </tr>
+            <tr>
+              <th>State of Origin</th>
+              <td>{{ student.state_of_origin }}</td>
+            </tr>
+            <tr>
+              <th>Level</th>
+              <td>{{ student.level }}</td>
+            </tr>
+            <tr>
+              <th>Year of Admission</th>
+              <td>{{ student.year_of_admission }}</td>
+            </tr>
+            <tr>
+              <th>Duration</th>
+              <td>{{ student.duration }}</td>
+            </tr>
+            <tr>
+              <th>Hostel Room Number</th>
+              <td>{{ student.hostel_room_number }}</td>
+            </tr>
+            <tr>
+              <th>Contact Address</th>
+              <td>{{ student.contact_address }}</td>
+            </tr>
+        </table>
+        <!-- ... -->
+
+      </div>
+      {% if not request.user.is_department %}
+      <div class="col-md-6 card">
+        <!-- Departments and Clearance Status -->
+        <h4>Departments and Clearance Status</h4>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Department</th>
+              <th scope="col">Status</th>
+              <th scope="col">Decline Reason</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for clearance_request in student.clearancerequest_set.all %}
+              <tr>
+                <td>{{ clearance_request.department.name }}</td>
+                <td>
+                  {% if clearance_request.is_approved %}
+                    <span class="badge bg-success">Approved</span>
+                  {% else %}
+                    <span class="badge bg-warning text-dark">Pending</span>
+                  {% endif %}
+                </td>
+                <td>{{ clearance_request.decline_reason }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

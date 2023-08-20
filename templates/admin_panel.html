@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+  .container {
+  margin-top: 30px;
+}
+
+h3 {
+  color: blueviolet;
+}
+
+.box {
+  display: flex;
+  margin: 40px 0;
+}
+
+.inner-box {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  width: 50%;
+  padding: 20px;
+  margin-right: 20px;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+}
+
+.inner-box i {
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+.inner-box .info p {
+  margin: 0;
+}
+
+.news-feed {
+  margin-top: 40px;
+}
+
+.news-feed h4 {
+  color: blueviolet;
+}
+
+.news-feed ul {
+  list-style: none;
+  padding: 0;
+}
+
+.news-feed .item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.news-feed .item i {
+  font-size: 20px;
+  margin-right: 10px;
+  color: purple;
+}
+
+.activities-board {
+  margin-top: 40px;
+}
+
+.activities-board h4 {
+  color: blueviolet;
+}
+
+.activities-board .activity {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.activities-board .activity i {
+  font-size: 20px;
+  margin-right: 10px;
+  color: purple;
+}
+
+.activities-board .activity .content h5 {
+  margin: 0;
+  color: blueviolet;
+}
+
+.activities-board .activity .content p {
+  margin: 0;
+  color: #666;
+}
+
+</style>
+  <div class="container">
+    {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-success role="alert">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    <h3>Dashboard</h3>
+    <div class="box">
+      <div class="inner-box">
+        <i class="bi bi-person"></i>
+        <div class="info">
+          <p>Total number of students</p>
+          <span>{{total_students}}</span>
+        </div>
+      </div>
+      <div class="inner-box">
+        <i class="bi bi-check-circle"></i>
+        <div class="info">
+          <p>Total Cleared Students</p>
+          <span>{{cleared}}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="news-feed">
+      <h4>News Feed</h4>
+      <ul>
+        <li class="item">
+          <i class="bi bi-newspaper"></i>
+          <div class="content">
+            <h5>Important Announcement</h5>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          </div>
+        </li>
+        <li class="item">
+          <i class="bi bi-newspaper"></i>
+          <div class="content">
+            <h5>Upcoming Event</h5>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="activities-board">
+      <h4>Activities Board</h4>
+      <div class="activity">
+        <i class="bi bi-calendar"></i>
+        <div class="content">
+          <h5>Event 1</h5>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+      </div>
+      <div class="activity">
+        <i class="bi bi-calendar"></i>
+        <div class="content">
+          <h5>Event 2</h5>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

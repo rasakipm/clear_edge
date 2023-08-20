@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgb(17, 4, 41);
+        }
+      .container {
+        margin-top: 30px;
+        width: 100%;
+        text-align: center;
+        
+
+      }
+
+      h1 {
+        color: rgb(246, 246, 247);
+      }
+
+      h3 {
+        color: rgb(248, 245, 248);
+      }
+
+      .alert {
+        margin-top: 20px;
+      }
+
+      .alert-success {
+        background-color: #d1e7dd;
+        border-color: #b6e3c6;
+        color: #0f5132;
+      }
+
+      .row-cols-1 {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .card {
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+          rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        background-color: #b6e3c6;
+        color: black;
+        /* Set width to 100% to make all boxes have the same width */
+      }
+
+      .card i {
+        font-size: 36px;
+        /* Increase the font size of the icon */
+        margin-bottom: 10px;
+        color: purple;
+      }
+
+      .card .info p {
+        margin: 0;
+      }
+
+      .card .info span {
+        font-size: 24px;
+        /* Increase the font size of the text */
+        font-weight: 600;
+        color: #666;
+      }
+
+      @media (min-width: 768px) {
+        .row-cols-md-2 {
+          column-count: 2;
+        }
+      }
+
+      @media (min-width: 992px) {
+        .row-cols-lg-4 {
+          column-count: 4;
+        }
+      }
+      a {
+        text-decoration: none;
+        color: black;
+      }
+    </style>
+   
+    <div class="card container" style="background-color: transparent;">
+      {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-success" role="alert">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+      <h1>Welcome to NUHU BAMALI Student Clearance system</h1>
+      <h3>Please choose your user type</h3>
+      <br/>
+      <br/>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+            <div class="card col">
+                <i class="bi bi-people"></i>
+                <p><a href="{% url 'admin_login' %}">Admin / Departments</a></p>
+            </div>
+
+            <div class=" card col">
+                <i class="bi bi-file-person-fill"></i>
+                <p><a href="{% url 'student_login' %}">Student Login</a></p>
+            </div>
+
+            <div class=" card col">
+                <i class="bi-person-fill"></i>
+                <p><a href="{% url 'register_student' %}">student clearance form</a></p>
+            </div>
+        </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const images = [
+          "{% static 'image1.png' %}",
+          "{% static 'image2.png' %}",
+          "{% static 'image3.png' %}",
+          "{% static 'image4.png' %}",
+        ];
+      
+        let currentImageIndex = 0;
+      
+        function changeBackgroundImage() {
+          document.body.style.backgroundImage = `url('${images[currentImageIndex]}')`;
+          currentImageIndex = (currentImageIndex + 1) % images.length;
+        }
+      
+        setInterval(changeBackgroundImage, 7000); // Change image every 5 seconds
+      });
+      
+        </script>
+  </body>
+</html>

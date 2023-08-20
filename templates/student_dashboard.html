@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+  .container {
+    margin-top: 30px;
+  }
+
+  h1 {
+    color: blueviolet;
+  }
+
+  h5 {
+    color: purple;
+  }
+
+  .alert {
+    margin-top: 20px;
+  }
+
+  .alert-success {
+    background-color: #d1e7dd;
+    border-color: #b6e3c6;
+    color: #0f5132;
+  }
+
+  .row-cols-1 {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .card {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    /* Set width to 100% to make all boxes have the same width */
+  }
+
+  .card i {
+    font-size: 36px;
+    /* Increase the font size of the icon */
+    margin-bottom: 10px;
+    color: purple;
+  }
+
+  .card .info p {
+    margin: 0;
+  }
+
+  .card .info span {
+    font-size: 24px;
+    /* Increase the font size of the text */
+    font-weight: 600;
+    color: #666;
+  }
+
+  @media (min-width: 768px) {
+    .row-cols-md-2 {
+      column-count: 2;
+    }
+  }
+
+  @media (min-width: 992px) {
+    .row-cols-lg-4 {
+      column-count: 4;
+    }
+  }
+</style>
+{% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-danger" role="alert">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+
+<div class="container">
+  <h3>{{request.user.last_name}} {{request.user.first_name}}</h3>
+
+    <div class="col-md-6 card">
+      <!-- Departments and Clearance Status -->
+      <h4>Departments and Clearance Status</h4>
+      <hr>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Department</th>
+            <th scope="col">Status</th>
+            <th scope="col">Decline Reason</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for clearance_request in student.clearancerequest_set.all %}
+            <tr>
+              <td>{{ clearance_request.department.name }}</td>
+              <td>
+                {% if clearance_request.is_approved %}
+                  <span class="badge bg-success">Approved</span>
+                {% else %}
+                  <span class="badge bg-warning text-dark">Pending</span>
+                {% endif %}
+              </td>
+              <td>{{ clearance_request.decline_reason }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <a class="btn btn-primary mr-4" href="{% url 'view_student_profile' student.id %}">view full profile</a>
+    <a class="btn btn-primary m-4" href="{% url 'download_clearance_slip' %}" >Download Slip</a>
+
+  </div>
+</div>
+{% endblock %}

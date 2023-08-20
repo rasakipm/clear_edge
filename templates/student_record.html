@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    <h3>Students Record</h3>
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-danger" role="alert">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+    <div class="container">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Session</th>
+            <th scope="col">Full Name</th>
+            <th scope="col">Matric Number</th>
+            <th scope="col">Faculty</th>
+            <th scope="col">Course</th>
+            <th scope="col">Status</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for student in students %}
+          <tr>
+            <td>{{ student.session }}</td>
+            <td>                  <a href="{% url 'view_student_profile' student.id %}"> {{ student.first_name }} {{ student.last_name }}</a></td>
+            <td>{{ student.matric_number }}</td>
+            <td>{{ student.faculty }}</td>
+            <td>{{ student.course }}</td>
+            <td>
+              {% if student.status %}
+                <span class="btn btn-sm btn-outline btn-success">Cleared</span>
+              {% else %}
+                <span class="btn btn-sm btn-outline btn-warning">Pending</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if not student.status %}
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal{{ student.id }}">
+                  Update Status
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal{{ student.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Alert</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <h6>Are you sure you want to Approve <strong>{{ student.first_name }} {{ student.last_name }}</strong></h6>
+                        <p>with matric number: <strong>{{ student.matric_number }}</strong></p>
+                        <p><a href="{% url 'view_student_profile' student.id %}">view profile instead</a>
+                        </p>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <form action="{% url 'status' %}" method="post">
+                          {% csrf_token %}
+                          <input type="text" hidden name="student_id" value="{{ student.id }}">
+                          <button type="submit" class="btn btn-primary">Approve</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}
