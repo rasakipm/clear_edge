@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>School Clearance System</title>
+  <title>ClearEdge</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
   <style>
     body {
-      background-color: #f3f2f2;
+      background-color: #e6fce4;
     }
 
     .bi {
@@ -19,11 +19,11 @@
 
     a {
       text-decoration: none;
-      color: blueviolet; /* Add a color to links */
+      color: #0f5132; /* Add a color to links */
     }
 
     #top-bar {
-      background-color: blueviolet;
+      background-color: #0f5132;
       padding: 10px;
       display: flex;
       justify-content: space-between;
@@ -58,45 +58,43 @@
     }
 
     .accordion-button {
-      background-color: #f8f9fa;
+      background-color: #0f5132;
       border: none;
       border-radius: 0.25rem;
-      color: blueviolet;
+      color: #b6e3c6;
       padding: 10px;
       text-align: left;
       transition: background-color 0.3s ease;
     }
 
-    .accordion-button:hover {
-      background-color: #e9ecef;
-    }
-
     .accordion-button:not(.collapsed) {
-      background-color: #e9ecef;
+      background-color: #021205;
+      color: #b6e3c6;
     }
 
     .accordion-body {
-      background-color: #f8f9fa;
+      background-color: #b6e3c6;
       border-radius: 0.25rem;
       border: 1px solid #dee2e6;
       margin-bottom: 10px;
       padding: 10px;
     }
   </style>
+  <title>ClearEdge</title>
 </head>
 <body>
   <div id="top-bar">
     <button class="btn btn-sm" style="color: #fff;" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"><i class="bi bi-three-dots"></i></button>
-    <span id="brand"> SCHOOL CLEARANCE SYSTEM </span>
+    <span id="brand"> NBP STUDENT CLEARANCE SYSTEM </span>
   </div>
   <div class="container">
     <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
-      <div class="offcanvas-header">
+      <div class="offcanvas-header" style="background-color: #0f5132; color: #b6e3c6;">
         {% if request.user.is_staff %}
         <span class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Welcome Admin</span>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" style="color: #fff;"></button>
       </div>
-      <div class="offcanvas-body">
+      <div class="offcanvas-body" style="background-color: #b6e3c6;">
         <i class="bi bi-house"></i> <a href="{% url 'admin_panel' %}">Home</a>
         <div class="accordion accordion-flush" id="accordionFlushExample">
           <div class="accordion-item">

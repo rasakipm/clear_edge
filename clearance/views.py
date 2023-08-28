@@ -165,13 +165,17 @@ def admin_login(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
-        if user is not None and user.is_staff:
-            login(request, user)
-            return redirect('admin_panel') 
-        elif user.is_department:
-            login(request, user)
-            return redirect('department_dashboard', user_id=user.id)
-        else:
+        try:
+            if user is not None and user.is_staff:
+                login(request, user)
+                return redirect('admin_panel') 
+            elif user.is_department:
+                login(request, user)
+                return redirect('department_dashboard', user_id=user.id)
+            else:
+                messages.error(request, 'Invalid username or password.')
+                return redirect('admin_login')
+        except AttributeError:
             messages.error(request, 'Invalid username or password.')
             return redirect('admin_login')
 
@@ -292,7 +296,9 @@ def download_clearance_slip(request):
 
         table = Table(clearance_slip_content)
         table.setStyle(TableStyle([
-            ('TEXTCOLOR', (0, 0), (-1, 0), colors.blueviolet),
+            ('TEXTCOLOR', (0, 0), (-1, 0), colors.green][
+                 
+            ]),
             ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
             ('ALIGN', (0, 0), (-1, 0), 'LEFT'),
             ('BOTTOMPADDING', (0, 0), (-1, 0), 10),
