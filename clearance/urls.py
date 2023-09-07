@@ -20,6 +20,9 @@ urlpatterns = [
     path('student-dashboard/<uuid:student_id>/', views.student_dashboard, name='student_dashboard'),
     path('student-login/',views.student_login, name='student_login'),
     path('std-logout/', views.std_logout, name='std_logout'),
-    path('download_clearance_slip/', views.download_clearance_slip, name='download_clearance_slip')
+    path('download_clearance_slip/', views.download_clearance_slip, name='download_clearance_slip'),
+
+    # api
+        path('api', views.endpoint, name='endpoint'),
 
     ]

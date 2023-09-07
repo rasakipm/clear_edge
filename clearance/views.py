@@ -18,7 +18,8 @@ from io import BytesIO
 from django.http import HttpResponse
 from django.core.files.temp import NamedTemporaryFile
 from datetime import datetime
-
+from django.http import JsonResponse
+import json
 
 
 # Admin Panel Views
@@ -299,3 +300,24 @@ def download_clearance_slip(request):
     else:
         messages.error(request, 'You are yet to be cleared')
         return redirect('student_dashboard', student.id)
+
+
+def endpoint(request):
+    # Get query parameters
+    slack_name = request.GET.get('slack_name')
+    track = request.GET.get('track')
+    current_day = datetime.now().strftime('%A')
+    current_utc_time = datetime.utcnow().strftime('%Y-%m-%dT%H:%SZ')
+    github_file_url = "https://github.com"
+    github_repo_url = "https://github.com"
+    response_data = {
+        "slack_name":slack_name,
+        "current_day":current_day,
+        "utc_time":current_utc_time,
+        "track":track,
+        "github_file_url":github_file_url,
+        "github_repo_url":github_repo_url,
+        "status_code": 200
+    }
+    return JsonResponse(response_data)
+    
