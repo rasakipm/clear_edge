@@ -83,38 +83,25 @@ def register_student(request):
         lname = request.POST.get('lastname')
         mat_num = request.POST.get('matric_number')
         phone = request.POST.get('phone')
-        email = request.POST.get('email')
         session = request.POST.get('session')
         dept = request.POST.get('department')
         faculty = request.POST.get('faculty')
-        date_of_birth = request.POST['date_of_birth']
-        nationality = request.POST['nationality']
         gender = request.POST['gender']
-        state_of_origin = request.POST['state_of_origin']
         level = request.POST['level']
-        year_of_admission = request.POST['year_of_admission']
-        duration = request.POST['duration']
         hostel_room_number = request.POST['hostel_room_number']
         contact_address = request.POST['contact_address']
-        passport_photograph = request.FILES['passport_photograph']
         
         student = Student(first_name=fname,
                             last_name=lname,
                             matric_number=mat_num,
-                            email=email, phone=phone,
+                            phone=phone,
                             session=session,
                             course=dept,
                             faculty=faculty,
-                            date_of_birth=date_of_birth,
-                            nationality=nationality,
                             gender=gender,
-                            state_of_origin=state_of_origin,
                             level=level,
-                            year_of_admission=year_of_admission,
-                            duration=duration,
                             hostel_room_number=hostel_room_number,
                             contact_address=contact_address,
-                            passport_photograph=passport_photograph,
                             username=mat_num,
                             password=lname)
         student.set_password(lname.lower())
@@ -265,12 +252,12 @@ def download_clearance_slip(request):
             ['NUHU BAMALI POLYTECHNIC'],
             ['Student Clearance Slip'],
             ['Student Name:', student.get_full_name()],
-            ['Matric Number:', student.matric_number],
+            ['Registration Number:', student.matric_number],
             ['Department:', student.course],
-            ['Faculty:', student.faculty],
+            ['School:', student.faculty],
             ['Session:', student.session],
             ['Clearance Status:', 'Approved'],
-            ['Date of Clearance:', datetime.today().date()],  # Replace with actual date
+            ['Date of Clearance:', datetime.today().date()],
             [''],
             ['This is to certify that {} has successfully completed all necessary clearance requirements and is cleared for graduation.'.format(student.get_full_name())],
             [''],
@@ -296,9 +283,7 @@ def download_clearance_slip(request):
 
         table = Table(clearance_slip_content)
         table.setStyle(TableStyle([
-            ('TEXTCOLOR', (0, 0), (-1, 0), colors.green][
-                 
-            ]),
+            ('TEXTCOLOR', (0, 0), (-1, 0), colors.green),
             ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
             ('ALIGN', (0, 0), (-1, 0), 'LEFT'),
             ('BOTTOMPADDING', (0, 0), (-1, 0), 10),

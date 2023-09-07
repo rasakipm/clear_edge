@@ -10,20 +10,12 @@ class Student(AbstractUser):
     session = models.CharField(max_length=100, null=True)
     course = models.CharField(max_length=100, null=True)
     faculty = models.CharField(max_length=100, null=True)
-    email = models.EmailField(unique=True, null=True)
     status = models.BooleanField(default=False)
-    total_fee_paid = models.DecimalField(max_digits=8, decimal_places=2, null=True, default=0.00)
     is_department = models.BooleanField(default=False)
-    date_of_birth = models.DateField(null=True)
-    nationality = models.CharField(max_length=50, null=True)
     gender = models.CharField(max_length=10, null=True)
-    state_of_origin = models.CharField(max_length=50, null=True)
     level = models.CharField(max_length=10, null=True)
-    year_of_admission = models.PositiveIntegerField(null=True)
-    duration = models.PositiveIntegerField(null=True)
     hostel_room_number = models.CharField(max_length=20, null=True)
     contact_address = models.TextField(null=True)
-    passport_photograph = models.ImageField(upload_to='passport_photos/')
     
     def __str__(self):
         return self.username
